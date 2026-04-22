@@ -288,79 +288,202 @@
 </footer>
 
 <script>
-  const items = [
-    {
-      "title": `Customer Raises a Cloud Server Performance Ticket`,
-      "subtitle": `Investigation & escalation protocol`,
-      "category": `Cloud & Server Handling`,
-      "do": {
-        "heading": `Conduct a thorough investigation before any action.`,
-        "bullets": [
-          `Verify whether the server resources align with the total number of purchased licenses.`,
-          `If resources are insufficient, raise a cloud ticket to request a server upgrade.`,
-          `If the issue is not related to server resources, review the logs and consult the internal team.`
-        ]
-      },
-      "dont": {
-        "heading": `Do not RDP into the Cloud server (GMS) or share internal server details.`,
-        "body": `The support agent must not RDP into the Cloud server (GMS) or take screenshots of Task Manager showing server details for the customer.`
-      }
+const items = [
+  // ── Cloud & Server Handling ──
+  {
+    title: "Customer Raises a Cloud Server Performance Ticket",
+    subtitle: "Investigation & escalation protocol",
+    category: null,
+    do: {
+      heading: "Conduct a thorough investigation before any action.",
+      bullets: [
+        "Conduct a proper investigation first.",
+        "Verify whether the server resources align with the total number of purchased licenses.",
+        "If the resources are insufficient, raise a cloud ticket to request a server upgrade.",
+        "If the issue is not related to server resources, review the logs, consult the internal team if necessary, and inform the customer that the issue is being investigated further."
+      ]
     },
-    {
-      "title": `Reaching Out to Cross-Functional Teams`,
-      "subtitle": `Internal communication channel`,
-      "category": `Internal Communication & Escalation`,
-      "do": {
-        "heading": `Create a JIRA and have L3 / TL review it.`,
-        "body": `They will help reach out to PMs or POs through the proper communication channels.`
-      },
-      "dont": {
-        "heading": `Do not reach out directly to POs and PMs.`,
-        "body": `Never contact POs or PMs directly—always follow the proper internal escalation path.`
-      }
-    },
-    {
-      "title": `Customer Recovery`,
-      "subtitle": `New contact handling`,
-      "do": {
-        "heading": `Recovery on New Contact is a must.`,
-        "body": `Always perform customer recovery when taking on a new contact. Acknowledge the customer and show ownership.`
-      },
-      "dont": {
-        "heading": `Do not skip the recovery phase.`,
-        "body": `Failing to perform recovery on a new contact is a gap in service quality.`
-      }
-    },
-    {
-      "title": `OOO Email to Customer`,
-      "subtitle": `Out-of-office communication tone`,
-      "category": `Email & Written Communication`,
-      "do": {
-        "heading": `Focus on a polite and courteous tone.`,
-        "body": `Use professional language like "Apologies for the delay" and stay customer-centric.`
-      },
-      "dont": {
-        "heading": `Do not disclose personal reasons like sick leave.`,
-        "body": `We must never mention sick leave or personal excuses in customer-facing communication.`
-      }
-    },
-    {
-      "title": `Upgrade Cases – Best Practices`,
-      "subtitle": `Pre-upgrade validation`,
-      "category": `Upgrade Management`,
-      "do": {
-        "heading": `Perform server tuning and review prerequisites.`,
-        "bullets": [
-          `Share release notes and prerequisites with the customer.`,
-          `Perform required server tuning (log shrinking) before scheduling.`
-        ]
-      },
-      "dont": {
-        "heading": `Do not schedule without validating prerequisites.`,
-        "body": `Scheduling without checks is a leading cause of upgrade failures.`
-      }
+    dont: {
+      heading: "Do not RDP into the Cloud server (GMS) or share internal server details.",
+      body: "The support agent must not RDP into the Cloud server (GMS), take a screenshot of Task Manager showing all server details without proper investigation, or share whatever they can see of the Cloud Server with the customer."
     }
-  ];
+  },
+  // ── Internal Communication & Escalation ──
+  {
+    title: "Reaching Out to Cross-Functional Teams",
+    subtitle: "Internal communication channel",
+    category: "Internal Communication & Escalation",
+    do: {
+      heading: "Create a JIRA with all necessary information and have L3 / TL review it.",
+      body: "They will help to reach out to PMs or POs through the proper communication channels."
+    },
+    dont: {
+      heading: "Do not reach out directly to POs and PMs without following the proper communication channel.",
+      body: "Never contact POs or PMs directly for a JIRA or any other details — always go through the proper communication channel."
+    }
+  },
+  {
+    title: "Customer Recovery",
+    subtitle: "New contact handling",
+    category: null,
+    do: {
+      heading: "Recovery on New Contact is a must.",
+      body: "Always perform customer recovery when taking on a new contact. Acknowledge the customer, show ownership, and demonstrate urgency."
+    },
+    dont: {
+      heading: "Not all engineers are raising recovery on new contact.",
+      body: "Failing to perform recovery on a new contact is a gap in service quality. This must be consistently applied by all agents."
+    }
+  },
+  // ── Email & Written Communication ──
+  {
+    title: "Emails Within SOTI for Assigning Activity / Upgrades",
+    subtitle: "Email subject line standards",
+    category: "Email & Written Communication",
+    do: {
+      heading: "Subject line must have the case number and instance number, with proper steps to be followed whilst performing the activity.",
+      body: "Always include the Case number or instance in the subject line along with clear, step-by-step instructions so any agent picking up the task has full context."
+    },
+    dont: {
+      heading: "Do not send with just the Case number or instance in the subject line, without steps to do the activity.",
+      body: "Sending emails without actionable steps leads to confusion and delays. Every internal assignment email must be self-contained and actionable."
+    }
+  },
+  {
+    title: "OOO Email to Customer",
+    subtitle: "Out-of-office communication tone",
+    category: null,
+    do: {
+      heading: "Focus on a polite and courteous tone in all OOO emails.",
+      body: "Rather than disclosing reasons for absence, use professional language: e.g., \"Apologies for the delay\" — keeping the message customer-centric and solution-focused."
+    },
+    dont: {
+      heading: "Do not inform the customer about sick leave or any other personal excuse.",
+      body: "We must never mention sick leave, personal reasons, or internal staffing details in any customer-facing OOO communication."
+    }
+  },
+  // ── Upgrade Management ──
+  {
+    title: "Upgrade Cases – Best Practices to Reduce Upgrade Failures and Upgrade Time",
+    subtitle: "Pre-upgrade validation & scheduling",
+    category: "Upgrade Management",
+    do: {
+      heading: "Review the environment, share release notes, perform server tuning, and proceed only after all validations are complete.",
+      bullets: [
+        "Upon receiving an upgrade case, review the environment and share release notes with appropriate prerequisites to the customer.",
+        "Perform required server tuning (log shrinking/truncation) and ensure that proper disk or database space is available.",
+        "Proceed with scheduling the upgrade only after all validations are completed."
+      ]
+    },
+    dont: {
+      heading: "Do not schedule an upgrade without first reviewing and validating all upgrade prerequisites.",
+      body: "Scheduling an upgrade without completing all prerequisite checks is a leading cause of upgrade failures and extended downtime for customers."
+    }
+  },
+  // ── Customer-Facing Communication ──
+  {
+    title: "Informing Customer About Internal Team Name",
+    subtitle: "Internal team confidentiality",
+    category: "Customer-Facing Communication",
+    do: {
+      heading: "Inform customers that you are either checking internally or with internal teams.",
+      body: "Use neutral, non-specific language that conveys you are investigating without revealing the names or structure of internal teams."
+    },
+    dont: {
+      heading: "Do not mention internal team names such as Escalations, Dev, Cloud, or Sales Team.",
+      body: "Refrain from mentioning that we are working with Escalations, Dev, Cloud, Sales Team, etc. This can create confusion and set incorrect expectations with the customer."
+    }
+  },
+  {
+    title: "Sensitive Communication Scenarios",
+    subtitle: "Neutral & solution-focused language",
+    category: null,
+    do: {
+      heading: "Maintain neutral and solution-focused language at all times.",
+      body: "Always frame responses around what you can do to help, avoiding any language that places blame on the customer or reveals internal limitations."
+    },
+    dont: {
+      heading: "Do not blame customer configuration or disclose internal-only details.",
+      bullets: [
+        "Avoid blaming customer configuration.",
+        "Avoid saying \"This is not our issue.\"",
+        "Avoid saying \"Product limitation\" without explanation.",
+        "Avoid mentioning internal bugs unless approved."
+      ]
+    }
+  },
+  {
+    title: "When Mentioning About the Involvement of a PS Opportunity",
+    subtitle: "Professional Services framing",
+    category: null,
+    do: {
+      heading: "Mention that we can raise a Discovery Call — free of charge.",
+      body: "Explain: During this session, our team will gather all necessary details and review the change request thoroughly. Once the assessment is completed, the team will share a formal quote outlining the effort and associated cost for the change request."
+    },
+    dont: {
+      heading: "Do not start with \"it will be a paid activity.\"",
+      body: "Opening with cost creates immediate resistance. Lead with the value of the Discovery Call and the process, not the price."
+    }
+  },
+  // ── Case Management ──
+  {
+    title: "Case Notes for the Cases",
+    subtitle: "Internal case documentation standards",
+    category: "Case Management",
+    do: {
+      heading: "Add valid, detailed feeds with all information and timestamps.",
+      body: "Include all actions taken with timestamps if possible. If there are any similar incidents reported, add them as well. If multiple agents or shifts are involved, include those details for internal reference only — not for sharing with the customer."
+    },
+    dont: {
+      heading: "Do not add generic comments to case notes.",
+      body: "Generic comments provide no audit trail and make it difficult for other agents or managers to understand what actions have been taken."
+    }
+  },
+  {
+    title: "First Response for Emails",
+    subtitle: "Email triage & response approach",
+    category: null,
+    do: {
+      heading: "Based on entitlement and urgency, consider setting up a call rather than sending a standard email.",
+      body: "At times, based on entitlement and urgency, we may be required to set up a call rather than sending an email requesting a registration code and handling basic queries."
+    },
+    dont: {
+      heading: "Do not use standard templates without reading through the content of the email on the feed.",
+      body: "Every first response must be tailored to the customer's specific situation. Using a template without reading the case content leads to irrelevant and unhelpful responses."
+    }
+  },
+  {
+    title: "Customer A Reports a MobiControl Issue Affecting Multiple Users on the Same Version",
+    subtitle: "Cross-customer data confidentiality",
+    category: null,
+    do: {
+      heading: "Inform the customer you will check with your team internally and proceed with next steps.",
+      body: "Tell the customer you will check with your team internally and proceed with the next steps to investigate the issue or identify any available workaround. Do not share any details related to other customers."
+    },
+    dont: {
+      heading: "Do not disclose that another customer is experiencing a similar issue.",
+      body: "The support agent must not disclose that another customer (Customer B) is experiencing a similar issue, nor share any details about that customer or their case. The agent should not mention that testing is being conducted for another customer."
+    }
+  },
+  // ── Knowledge Base & Documentation ──
+  {
+    title: "Attaching KB Article in Salesforce (SF)",
+    subtitle: "Knowledge Base article linking on case closure",
+    category: "Knowledge Base & Documentation",
+    do: {
+      heading: "Always attach the reference KB article in the SF case when closing it.",
+      bullets: [
+        "When a KB article is used to resolve a customer issue, attach it directly to the SF case before closing.",
+        "This helps other engineers and customers find the solution within SF itself for similar issues in the future.",
+        "Attaching the article also recognises and shows the efforts of those who contributed to creating the KB."
+      ]
+    },
+    dont: {
+      heading: "Do not follow the KB article to solve the issue without attaching it to the SF case.",
+      body: "Engineers must not simply use the article to resolve the issue and close the case without linking it. Failing to attach the KB article means the knowledge is lost for future reference and the contribution of the KB author goes unrecognised."
+    }
+  }
+];
 
   function init() {
     const container = document.getElementById('accordion');
