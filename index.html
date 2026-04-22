@@ -1,774 +1,417 @@
-<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SOTI Support · Agent Guidelines</title>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOTI Support · Agent Guidelines</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root {
-/* Colors*/
---soti-blue:     #0074AA;
-–soti-wave:     #0099D3;
-–soti-coral:    #F1614F;
-–soti-electric: #32B6E9;
-–soti-pebble:   #7C7C81;
-–soti-seaweed:   #7AC142;
+    :root {
+      /* SOTI Brand Palette */
+      --soti-blue:     #0074AA;
+      --soti-wave:     #0099D3;
+      --soti-coral:    #F1614F;
+      --soti-marine:   #AED255;
+      --soti-electric: #32B6E9;
+      --soti-pebble:   #7C7C81;
+      /* UI Tokens */
+      --bg:            #EEF4F8;
+      --surface:       #FFFFFF;
+      --ink:           #0D1F2D;
+      --ink-mid:       #3A5166;
+      --ink-light:     #6A7F90;
+      --border:        #D3E0EA;
+      --dont-bg:       #FFF6F5;
+      --dont-border:   #F9CEC9;
+      --do-bg:         #F0F8FF;
+      --do-border:     #BDD8ED;
+    }
 
-```
---bg:            #EEF4F8;
---surface:       #FFFFFF;
---ink:           #0D1F2D;
---ink-mid:       #3A5166;
---ink-light:     #6A7F90;
---border:        #D3E0EA;
---dont-bg:       #FFF6F5;
---dont-border:   #F9CEC9;
---do-bg:         #F7FCF5; 
---do-border:     #D1E8C4;
-```
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
 
-}
+    /* Subtle background blobs */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -140px; left: -140px;
+      width: 440px; height: 440px;
+      background: radial-gradient(circle, rgba(0,153,211,0.1) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-/* Font*/
-body {
-font-family: 'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-background: var(–bg);
-color: var(–ink);
-min-height: 100vh;
-overflow-x: hidden;
-}
+    header {
+      text-align: center;
+      padding: 48px 24px 32px;
+      position: relative;
+      z-index: 1;
+    }
 
-/* position:fixed removed for Teams/SharePoint iframe compatibility */
+    .header-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
 
-/*Header*/
-header {
-text-align: center;
-padding: 48px 24px 32px;
-position: relative;
-z-index: 1;
-}
+    .header-logo .logo-mark {
+      height: 44px;
+      width: auto;
+      display: block;
+    }
 
-/*Logo*/
-.header-logo {
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 8px;
-margin-bottom: 22px;
-}
+    .header-logo .logo-tagline {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--soti-wave);
+    }
 
-.header-logo .logo-mark {
-height: 44px;
-width: auto;
-display: block;
-}
+    .header-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--soti-wave);
+      margin: 0 auto 20px;
+      border-radius: 2px;
+    }
 
-.header-logo .logo-tagline {
-font-size: 10px;
-font-weight: 700;
-letter-spacing: 0.22em;
-text-transform: uppercase;
-color: var(–soti-wave);
-text-align: center;
-}
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--soti-blue);
+      margin-bottom: 10px;
+    }
 
-.header-divider {
-width: 48px;
-height: 2px;
-background: var(–soti-wave);
-margin: 0 auto 20px;
-border-radius: 2px;
-}
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.12;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
 
-header .eyebrow {
-font-size: 11px;
-font-weight: 600;
-letter-spacing: 0.26em;
-text-transform: uppercase;
-color: var(--soti-blue);
-margin-bottom: 10px;
-}
+    h1 em { font-style: italic; color: var(--soti-wave); }
 
-header h1 {
-font-size: clamp(1.8rem, 5vw, 3.2rem);
-font-weight: 700;
-line-height: 1.12;
-color: var(–ink);
-letter-spacing: -0.01em;
-}
+    .hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 18px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--soti-blue);
+      background: rgba(0,116,170,0.1);
+      border: 1px solid rgba(0,116,170,0.18);
+      padding: 6px 16px;
+      border-radius: 50px;
+    }
 
-header h1 em {
-font-style: italic;
-color: var(–soti-wave);
-}
+    main {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+      position: relative;
+      z-index: 1;
+    }
 
-header p {
-margin-top: 12px;
-font-size: 14px;
-color: var(–ink-mid);
-font-weight: 400;
-}
+    .category-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 32px 0 12px;
+    }
 
-.hint {
-display: inline-flex;
-align-items: center;
-gap: 6px;
-margin-top: 18px;
-font-size: 11px;
-font-weight: 600;
-letter-spacing: 0.07em;
-color: var(--soti-blue);
-background: rgba(0,116,170,0.1);
-border: 1px solid rgba(0,116,170,0.18);
-padding: 6px 16px;
-border-radius: 50px;
-}
+    .cat-pip {
+      width: 4px;
+      height: 16px;
+      border-radius: 2px;
+      background: var(--soti-wave);
+    }
 
-.hint svg { width: 14px; height: 14px; }
+    .category-label span {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--soti-blue);
+    }
 
-/* Main*/
-main {
-max-width: 940px;
-margin: 0 auto;
-padding: 0 20px 80px;
-position: relative;
-z-index: 1;
-}
+    .cat-line { flex: 1; height: 1px; background: var(--border); }
 
-/* Category*/
-.category-label {
-display: flex;
-align-items: center;
-gap: 12px;
-margin: 32px 0 12px;
-}
+    .section { margin-bottom: 12px; }
 
-.category-label .cat-pip {
-width: 4px;
-height: 16px;
-border-radius: 2px;
-background: var(–soti-wave);
-flex-shrink: 0;
-}
+    .section-trigger {
+      width: 100%;
+      background: var(--surface);
+      border: 2px solid transparent;
+      border-radius: 14px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 10px rgba(0,116,170,0.07);
+      text-align: left;
+    }
 
-.category-label span {
-font-size: 10px;
-font-weight: 700;
-letter-spacing: 0.22em;
-text-transform: uppercase;
-color: var(--soti-blue);
-white-space: nowrap;
-}
+    .section-trigger:hover, .section.active .section-trigger {
+      background: var(--soti-blue);
+      border-color: var(--soti-blue);
+      box-shadow: 0 8px 28px rgba(0,116,170,0.3);
+      transform: translateY(-2px);
+    }
 
-.category-label .cat-line {
-flex: 1;
-height: 1px;
-background: var(–border);
-}
+    .trigger-left { display: flex; align-items: flex-start; gap: 14px; flex: 1; }
 
-.section {
-margin-bottom: 12px;
-}
+    .section-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--soti-blue);
+      flex-shrink: 0;
+      border: 1.5px solid var(--border);
+    }
 
-.section-trigger {
-width: 100%;
-background: var(–surface);
-border: 2px solid transparent;
-border-radius: 14px;
-padding: 18px 22px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-cursor: pointer;
-transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-box-shadow: 0 2px 10px rgba(0,116,170,0.07);
-text-align: left;
-}
+    .section-trigger:hover .section-number, .section.active .section-number {
+      background: rgba(255,255,255,0.18);
+      border-color: rgba(255,255,255,0.25);
+      color: #fff;
+    }
 
-/* Hover*/
-.section-trigger:hover,
-.section.active .section-trigger {
-background: var(--soti-blue);
-border-color: var(--soti-blue);
-box-shadow: 0 8px 28px rgba(0,116,170,0.3);
-transform: translateY(-2px);
-}
+    .section-title { font-size: 14px; font-weight: 600; color: var(--ink); }
+    .section-trigger:hover .section-title, .section.active .section-title { color: #fff; }
 
-.trigger-left {
-display: flex;
-align-items: flex-start;
-gap: 14px;
-flex: 1;
-min-width: 0;
-}
+    .section-subtitle { font-size: 11px; color: var(--ink-light); margin-top: 3px; }
+    .section-trigger:hover .section-subtitle, .section.active .section-subtitle { color: rgba(255,255,255,0.6); }
 
-/* Number badge */
-.section-number {
-width: 34px;
-height: 34px;
-border-radius: 8px;
-background: var(–bg);
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 11px;
-font-weight: 700;
-color: var(--soti-blue);
-flex-shrink: 0;
-margin-top: 1px;
-transition: all 0.25s ease;
-border: 1.5px solid var(–border);
-}
+    .chevron svg { width: 13px; height: 13px; stroke: var(--soti-blue); transition: transform 0.4s; }
+    .section-trigger:hover .chevron svg, .section.active .chevron svg { stroke: #fff; }
+    .section.active .chevron svg { transform: rotate(180deg); }
 
-.section-trigger:hover .section-number,
-.section.active .section-number {
-background: rgba(255,255,255,0.18);
-border-color: rgba(255,255,255,0.25);
-color: #fff;
-}
+    .cards-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
 
-.trigger-text { flex: 1; min-width: 0; }
+    .section.active .cards-panel { max-height: 1000px; opacity: 1; margin-top: 12px; }
 
-.section-title {
-font-size: 14px;
-font-weight: 600;
-color: var(–ink);
-line-height: 1.35;
-transition: color 0.25s;
-}
+    .card {
+      border-radius: 12px;
+      padding: 20px 18px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+    }
 
-.section-trigger:hover .section-title,
-.section.active .section-title { color: #fff; }
+    .card.dont { background: var(--dont-bg); border-color: var(--dont-border); border-left: 4px solid var(--soti-coral); }
+    .card.do { background: var(--do-bg); border-color: var(--do-border); border-left: 4px solid var(--soti-wave); }
 
-.section-subtitle {
-font-size: 11px;
-color: var(–ink-light);
-font-weight: 400;
-margin-top: 3px;
-transition: color 0.25s;
-}
+    .card-badge {
+      display: inline-flex;
+      padding: 3px 11px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      color: #fff;
+    }
 
-.section-trigger:hover .section-subtitle,
-.section.active .section-subtitle { color: rgba(255,255,255,0.6); }
+    .card.dont .card-badge { background: var(--soti-coral); }
+    .card.do .card-badge { background: var(--soti-blue); }
 
-/* Chevron */
-.chevron {
-width: 30px;
-height: 30px;
-border-radius: 50%;
-background: var(–bg);
-border: 1.5px solid var(–border);
-display: flex;
-align-items: center;
-justify-content: center;
-flex-shrink: 0;
-transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
+    .card h3 { font-size: 13px; margin-bottom: 8px; }
+    .card p, .card li { font-size: 12.5px; color: var(--ink-mid); }
+    .card ul { padding-left: 18px; }
 
-.chevron svg {
-width: 13px;
-height: 13px;
-stroke: var(--soti-blue);
-transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), stroke 0.25s;
-}
+    .page-footer {
+      background: var(--soti-blue);
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+    }
 
-.section-trigger:hover .chevron,
-.section.active .chevron {
-background: rgba(255,255,255,0.18);
-border-color: rgba(255,255,255,0.25);
-}
-
-.section-trigger:hover .chevron svg,
-.section.active .chevron svg { stroke: #fff; }
-
-.section.active .chevron svg { transform: rotate(180deg); }
-
-/* ── Cards panel ── */
-.cards-panel {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 10px;
-padding: 0 4px;
-max-height: 0;
-overflow: hidden;
-opacity: 0;
-margin-top: 0;
-transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-opacity 0.4s ease,
-margin-top 0.4s ease;
-}
-
-.section.active .cards-panel {
-max-height: 2000px;
-opacity: 1;
-margin-top: 8px;
-}
-
-/* ── Cards ── */
-.card {
-border-radius: 12px;
-padding: 20px 18px;
-border: 1.5px solid var(–border);
-background: var(–surface);
-transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.card:hover {
-transform: translateY(-3px);
-box-shadow: 0 10px 28px rgba(0,0,0,0.09);
-}
-
-/* @keyframes removed for SP compatibility */
-
-/* Don't -- coral accent */
-.card.dont {
-background: var(–dont-bg);
-border-color: var(–dont-border);
-border-left: 4px solid var(–soti-coral);
-}
-
-/* Do -- blue accent */
-.card.do {
-background: var(–do-bg);
-border-color: var(–do-border);
-border-left: 4px solid var(–soti-seaweed);
-}
-
-.card-badge {
-display: inline-flex;
-align-items: center;
-gap: 5px;
-padding: 3px 11px;
-border-radius: 4px;
-font-size: 10px;
-font-weight: 700;
-letter-spacing: 0.1em;
-text-transform: uppercase;
-margin-bottom: 12px;
-}
-
-.card.dont .card-badge { background: var(–soti-coral); color: #fff; }
-.card.do  .card-badge  { background: var(–soti-seaweed);  color: #fff; }
-
-.card h3 {
-font-size: 13px;
-font-weight: 600;
-line-height: 1.4;
-color: var(–ink);
-margin-bottom: 8px;
-}
-
-.card p {
-font-size: 12.5px;
-line-height: 1.72;
-color: var(–ink-mid);
-font-weight: 400;
-}
-
-.card ul {
-padding-left: 16px;
-margin-top: 4px;
-}
-
-.card ul li {
-font-size: 12.5px;
-line-height: 1.72;
-color: var(–ink-mid);
-margin-bottom: 4px;
-font-weight: 400;
-}
-
-/* ── Footer strip ── */
-.page-footer {
-background: var(--soti-blue);
-padding: 18px 40px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-flex-wrap: wrap;
-gap: 10px;
-position: relative;
-z-index: 1;
-}
-
-.page-footer .f-left {
-display: flex;
-align-items: center;
-gap: 12px;
-}
-
-.page-footer .f-text {
-font-size: 12px;
-color: rgba(255,255,255,0.6);
-font-weight: 400;
-}
-
-.page-footer .f-text strong {
-color: rgba(255,255,255,0.88);
-font-weight: 600;
-}
-
-.page-footer .f-right {
-font-size: 10px;
-font-weight: 600;
-letter-spacing: 0.16em;
-text-transform: uppercase;
-color: rgba(255,255,255,0.35);
-}
-
-/* ── Responsive ── */
-@media (max-width: 600px) {
-.cards-panel { grid-template-columns: 1fr; }
-header h1   { font-size: 1.75rem; }
-.page-footer { padding: 16px 20px; }
-main { padding: 0 14px 60px; }
-}
-</style>
-
+    @media (max-width: 600px) {
+      .cards-panel { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- ══ HEADER ══ -->
-
 <header>
-  <!-- SOTI Logo -->
   <div class="header-logo">
     <svg class="logo-mark" viewBox="0 0 180 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- S -->
-      <path d="M6 40C6 40 10 52 24 52C38 52 42 44 42 38C42 25 10 26 10 16C10 9.5 15.5 6 24 6C32.5 6 37 12 37 12"
-            stroke="#0074AA" stroke-width="8" stroke-linecap="round" fill="none"/>
-      <!-- O -->
+      <path d="M6 40C6 40 10 52 24 52C38 52 42 44 42 38C42 25 10 26 10 16C10 9.5 15.5 6 24 6C32.5 6 37 12 37 12" stroke="#0074AA" stroke-width="8" stroke-linecap="round" fill="none"/>
       <ellipse cx="72" cy="29" rx="18.5" ry="23" stroke="#0074AA" stroke-width="8" fill="none"/>
-      <!-- T -->
       <line x1="104" y1="6" x2="144" y2="6" stroke="#0074AA" stroke-width="8" stroke-linecap="round"/>
       <line x1="124" y1="6" x2="124" y2="52" stroke="#0074AA" stroke-width="8" stroke-linecap="round"/>
-      <!-- I -->
       <line x1="160" y1="6" x2="160" y2="52" stroke="#0074AA" stroke-width="8" stroke-linecap="round"/>
     </svg>
-    <span class="logo-tagline">One Platform - Connecting Everything</span>
+    <span class="logo-tagline">One Platform · Connecting Everything</span>
   </div>
-
   <div class="header-divider"></div>
-  <div class="eyebrow">SOTI Support Operations</div>
-  <h1>Agent Guidelines &amp; <em>Best Practices</em></h1>
-  <div class="hint">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-      <path d="M15 10l-4 4-4-4"/>
-    </svg>
-    Hover or tap a heading to expand
-  </div>
+  <div class="eyebrow">SOTI Global Support · Internal Handbook</div>
+  <h1>Agent Guidelines & <em>Best Practices</em></h1>
+  <div class="hint">Click or hover a heading to expand</div>
 </header>
 
-<main id="accordion">
-  <div class="category-label">
-    <div class="cat-pip"></div>
-    <span>Cloud &amp; Server Handling</span>
-    <div class="cat-line"></div>
-  </div>
-</main>
-
-<!-- ══ FOOTER ══ -->
+<main id="accordion"></main>
 
 <footer class="page-footer">
-  <div class="f-left">
-    <svg width="46" height="16" viewBox="0 0 220 54" fill="none">
-      <path d="M6 42C6 42 10 54 24 54C38 54 42 46 42 40C42 27 10 28 10 18C10 11 15.5 7.5 24 7.5C32.5 7.5 37 13 37 13"
-            stroke="white" stroke-width="8" stroke-linecap="round" fill="none"/>
-      <ellipse cx="72" cy="31" rx="18.5" ry="23.5" stroke="white" stroke-width="8" fill="none"/>
-      <line x1="104" y1="7.5" x2="144" y2="7.5" stroke="white" stroke-width="8" stroke-linecap="round"/>
-      <line x1="124" y1="7.5" x2="124" y2="54.5" stroke="white" stroke-width="8" stroke-linecap="round"/>
-      <line x1="160" y1="7.5" x2="160" y2="54.5" stroke="white" stroke-width="8" stroke-linecap="round"/>
-    </svg>
-    <span class="f-text"><strong>SOTI Support Operations</strong> · Agent Guidelines &amp; Best Practices</span>
-  </div>
+  <div class="f-left">SOTI Support Operations</div>
   <div class="f-right">Confidential · Internal Use Only</div>
 </footer>
 
 <script>
-const items = [
-  // ── Cloud & Server Handling ──
-  {
-    title: "Customer Raises a Cloud Server Performance Ticket",
-    subtitle: "Investigation & escalation protocol",
-    category: null,
-    mustFollow: {
-      heading: "Conduct a thorough investigation before any action.",
-      bullets: [
-        "Conduct a proper investigation first.",
-        "Verify whether the server resources align with the total number of purchased licenses.",
-        "If the resources are insufficient, raise a cloud ticket to request a server upgrade.",
-        "If the issue is not related to server resources, review the logs, consult the internal team if necessary, and inform the customer that the issue is being investigated further."
-      ]
+  const items = [
+    {
+      "title": `Customer Raises a Cloud Server Performance Ticket`,
+      "subtitle": `Investigation & escalation protocol`,
+      "category": `Cloud & Server Handling`,
+      "do": {
+        "heading": `Conduct a thorough investigation before any action.`,
+        "bullets": [
+          `Verify whether the server resources align with the total number of purchased licenses.`,
+          `If resources are insufficient, raise a cloud ticket to request a server upgrade.`,
+          `If the issue is not related to server resources, review the logs and consult the internal team.`
+        ]
+      },
+      "dont": {
+        "heading": `Do not RDP into the Cloud server (GMS) or share internal server details.`,
+        "body": `The support agent must not RDP into the Cloud server (GMS) or take screenshots of Task Manager showing server details for the customer.`
+      }
     },
-    dont: {
-      heading: "Do not RDP into the Cloud server (CMS) or share internal server details.",
-      body: "The support agent must not RDP into the Cloud server (CMS), take a screenshot of Task Manager showing all server details without proper investigation, or share whatever they can see of the Cloud Server with the customer."
-    }
-  },
-  // ── Internal Communication & Escalation ──
-  {
-    title: "Reaching Out to Cross-Functional Teams",
-    subtitle: "Internal communication channel",
-    category: "Internal Communication & Escalation",
-    mustFollow: {
-      heading: "Create a JIRA with all necessary information and have L3 / TL review it.",
-      body: "They will help to reach out to PMs or POs through the proper communication channels."
+    {
+      "title": `Reaching Out to Cross-Functional Teams`,
+      "subtitle": `Internal communication channel`,
+      "category": `Internal Communication & Escalation`,
+      "do": {
+        "heading": `Create a JIRA and have L3 / TL review it.`,
+        "body": `They will help reach out to PMs or POs through the proper communication channels.`
+      },
+      "dont": {
+        "heading": `Do not reach out directly to POs and PMs.`,
+        "body": `Never contact POs or PMs directly—always follow the proper internal escalation path.`
+      }
     },
-    dont: {
-      heading: "Do not reach out directly to POs and PMs without following the proper communication channel.",
-      body: "Never contact POs or PMs directly for a JIRA or any other details -- always go through the proper communication channel."
-    }
-  },
-  {
-    title: "Customer Recovery",
-    subtitle: "New contact handling",
-    category: null,
-    mustFollow: {
-      heading: "Recovery on New Contact is a must.",
-      body: "Always perform customer recovery when taking on a new contact. Acknowledge the customer, show ownership, and demonstrate urgency."
+    {
+      "title": `Customer Recovery`,
+      "subtitle": `New contact handling`,
+      "do": {
+        "heading": `Recovery on New Contact is a must.`,
+        "body": `Always perform customer recovery when taking on a new contact. Acknowledge the customer and show ownership.`
+      },
+      "dont": {
+        "heading": `Do not skip the recovery phase.`,
+        "body": `Failing to perform recovery on a new contact is a gap in service quality.`
+      }
     },
-    dont: {
-      heading: "Not all engineers are raising recovery on new contact.",
-      body: "Failing to perform recovery on a new contact is a gap in service quality. This must be consistently applied by all agents."
-    }
-  },
-  // ── Email & Written Communication ──
-  {
-    title: "Emails Within SOTI for Assigning Activity / Upgrades",
-    subtitle: "Email subject line standards",
-    category: "Email & Written Communication",
-    mustFollow: {
-      heading: "Subject line must have the case number and instance number, with proper steps to be followed whilst performing the activity.",
-      body: "Always include the Case number or instance in the subject line along with clear, step-by-step instructions so any agent picking up the task has full context."
+    {
+      "title": `OOO Email to Customer`,
+      "subtitle": `Out-of-office communication tone`,
+      "category": `Email & Written Communication`,
+      "do": {
+        "heading": `Focus on a polite and courteous tone.`,
+        "body": `Use professional language like "Apologies for the delay" and stay customer-centric.`
+      },
+      "dont": {
+        "heading": `Do not disclose personal reasons like sick leave.`,
+        "body": `We must never mention sick leave or personal excuses in customer-facing communication.`
+      }
     },
-    dont: {
-      heading: "Do not send with just the Case number or instance in the subject line, without steps to do the activity.",
-      body: "Sending emails without actionable steps leads to confusion and delays. Every internal assignment email must be self-contained and actionable."
+    {
+      "title": `Upgrade Cases – Best Practices`,
+      "subtitle": `Pre-upgrade validation`,
+      "category": `Upgrade Management`,
+      "do": {
+        "heading": `Perform server tuning and review prerequisites.`,
+        "bullets": [
+          `Share release notes and prerequisites with the customer.`,
+          `Perform required server tuning (log shrinking) before scheduling.`
+        ]
+      },
+      "dont": {
+        "heading": `Do not schedule without validating prerequisites.`,
+        "body": `Scheduling without checks is a leading cause of upgrade failures.`
+      }
     }
-  },
-  {
-    title: "OOO Email to Customer",
-    subtitle: "Out-of-office communication tone",
-    category: null,
-    mustFollow: {
-      heading: "Focus on a polite and courteous tone in all OOO emails.",
-      body: "Rather than disclosing reasons for absence, use professional language: e.g., \"Apologies for the delay\" -- keeping the message customer-centric and solution-focused."
-    },
-    dont: {
-      heading: "Do not inform the customer about sick leave or any other personal excuse.",
-      body: "We must never mention sick leave, personal reasons, or internal staffing details in any customer-facing OOO communication."
-    }
-  },
-  // ── Upgrade Management ──
-  {
-    title: "Upgrade Cases – Best Practices to Reduce Upgrade Failures and Upgrade Time",
-    subtitle: "Pre-upgrade validation & scheduling",
-    category: "Upgrade Management",
-    mustFollow: {
-      heading: "Review the environment, share release notes, perform server tuning, and proceed only after all validations are complete.",
-      bullets: [
-        "Upon receiving an upgrade case, review the environment and share release notes with appropriate prerequisites to the customer.",
-        "Perform required server tuning (log shrinking/truncation) and ensure that proper disk or database space is available.",
-        "Proceed with scheduling the upgrade only after all validations are completed."
-      ]
-    },
-    dont: {
-      heading: "Do not schedule an upgrade without first reviewing and validating all upgrade prerequisites.",
-      body: "Scheduling an upgrade without completing all prerequisite checks is a leading cause of upgrade failures and extended downtime for customers."
-    }
-  },
-  // ── Customer-Facing Communication ──
-  {
-    title: "Informing Customer About Internal Team Name",
-    subtitle: "Internal team confidentiality",
-    category: "Customer-Facing Communication",
-    mustFollow: {
-      heading: "Inform customers that you are either checking internally or with internal teams.",
-      body: "Use neutral, non-specific language that conveys you are investigating without revealing the names or structure of internal teams."
-    },
-    dont: {
-      heading: "Do not mention internal team names such as Escalations, Dev, Cloud, or Sales Team.",
-      body: "Refrain from mentioning that we are working with Escalations, Dev, Cloud, Sales Team, etc. This can create confusion and set incorrect expectations with the customer."
-    }
-  },
-  {
-    title: "Sensitive Communication Scenarios",
-    subtitle: "Neutral & solution-focused language",
-    category: null,
-    mustFollow: {
-      heading: "Maintain neutral and solution-focused language at all times.",
-      body: "Always frame responses around what you can do to help, avoiding any language that places blame on the customer or reveals internal limitations."
-    },
-    dont: {
-      heading: "Do not blame customer configuration or disclose internal-only details.",
-      bullets: [
-        "Avoid blaming customer configuration.",
-        "Avoid saying \"This is not our issue.\"",
-        "Avoid saying \"Product limitation\" without explanation.",
-        "Avoid mentioning internal bugs unless approved."
-      ]
-    }
-  },
-  {
-    title: "When Mentioning About the Involvement of a PS Opportunity",
-    subtitle: "Professional Services framing",
-    category: null,
-    mustFollow: {
-      heading: "Mention that we can raise a Discovery Call -- free of charge.",
-      body: "Explain: During this session, our team will gather all necessary details and review the change request thoroughly. Once the assessment is completed, the team will share a formal quote outlining the effort and associated cost for the change request."
-    },
-    dont: {
-      heading: "Do not start with \"it will be a paid activity.\"",
-      body: "Opening with cost creates immediate resistance. Lead with the value of the Discovery Call and the process, not the price."
-    }
-  },
-  // ── Case Management ──
-  {
-    title: "Case Notes for the Cases",
-    subtitle: "Internal case documentation standards",
-    category: "Case Management",
-    mustFollow: {
-      heading: "Add valid, detailed feeds with all information and timestamps.",
-      body: "Include all actions taken with timestamps if possible. If there are any similar incidents reported, add them as well. If multiple agents or shifts are involved, include those details for internal reference only -- not for sharing with the customer."
-    },
-    dont: {
-      heading: "Do not add generic comments to case notes.",
-      body: "Generic comments provide no audit trail and make it difficult for other agents or managers to understand what actions have been taken."
-    }
-  },
-  {
-    title: "First Response for Emails",
-    subtitle: "Email triage & response approach",
-    category: null,
-    mustFollow: {
-      heading: "Based on entitlement and urgency, consider setting up a call rather than sending a standard email.",
-      body: "At times, based on entitlement and urgency, we may be required to set up a call rather than sending an email requesting a registration code and handling basic queries."
-    },
-    dont: {
-      heading: "Do not use standard templates without reading through the content of the email on the feed.",
-      body: "Every first response must be tailored to the customer's specific situation. Using a template without reading the case content leads to irrelevant and unhelpful responses."
-    }
-  },
-  {
-    title: "Customer A Reports a MobiControl Issue Affecting Multiple Users on the Same Version",
-    subtitle: "Cross-customer data confidentiality",
-    category: null,
-    mustFollow: {
-      heading: "Inform the customer you will check with your team internally and proceed with next steps.",
-      body: "Tell the customer you will check with your team internally and proceed with the next steps to investigate the issue or identify any available workaround. Do not share any details related to other customers."
-    },
-    dont: {
-      heading: "Do not disclose that another customer is experiencing a similar issue.",
-      body: "The support agent must not disclose that another customer (Customer B) is experiencing a similar issue, nor share any details about that customer or their case. The agent should not mention that testing is being conducted for another customer."
-    }
-  },
-  // ── Knowledge Base & Documentation ──
-  {
-    title: "Attaching KB Article in Salesforce (SF)",
-    subtitle: "Knowledge Base article linking on case closure",
-    category: "Knowledge Base & Documentation",
-    mustFollow: {
-      heading: "Always attach the reference KB article in the SF case when closing it.",
-      bullets: [
-        "When a KB article is used to resolve a customer issue, attach it directly to the SF case before closing.",
-        "This helps other engineers and customers find the solution within SF itself for similar issues in the future.",
-        "Attaching the article also recognises and shows the efforts of those who contributed to creating the KB."
-      ]
-    },
-    dont: {
-      heading: "Do not follow the KB article to solve the issue without attaching it to the SF case.",
-      body: "Engineers must not simply use the article to resolve the issue and close the case without linking it. Failing to attach the KB article means the knowledge is lost for future reference and the contribution of the KB author goes unrecognised."
-    }
+  ];
+
+  function init() {
+    const container = document.getElementById('accordion');
+    items.forEach((item, i) => {
+      if (item.category) {
+        const cat = document.createElement('div');
+        cat.className = 'category-label';
+        cat.innerHTML = `<div class="cat-pip"></div><span>${item.category}</span><div class="cat-line"></div>`;
+        container.appendChild(cat);
+      }
+
+      const section = document.createElement('div');
+      section.className = 'section';
+      
+      const doContent = item.do.bullets 
+        ? `<ul>${item.do.bullets.map(b => `<li>${b}</li>`).join('')}</ul>` 
+        : `<p>${item.do.body}</p>`;
+
+      section.innerHTML = `
+        <button class="section-trigger">
+          <div class="trigger-left">
+            <div class="section-number">${i + 1}</div>
+            <div class="trigger-text">
+              <div class="section-title">${item.title}</div>
+              <div class="section-subtitle">${item.subtitle}</div>
+            </div>
+          </div>
+          <div class="chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </button>
+        <div class="cards-panel">
+          <div class="card dont"><div class="card-badge">✕ Don't</div><h3>${item.dont.heading}</h3><p>${item.dont.body || ''}</p></div>
+          <div class="card do"><div class="card-badge">✓ Do</div><h3>${item.do.heading}</h3>${doContent}</div>
+        </div>
+      `;
+
+      const btn = section.querySelector('.section-trigger');
+      btn.addEventListener('click', () => {
+        section.classList.toggle('active');
+        section._pinned = section.classList.contains('active');
+      });
+      
+      section.addEventListener('mouseenter', () => section.classList.add('active'));
+      section.addEventListener('mouseleave', () => {
+        if(!section._pinned) section.classList.remove('active');
+      });
+
+      container.appendChild(section);
+    });
   }
-];
- 
-const accordion = document.getElementById('accordion');
- 
-items.forEach((item, i) => {
-  // Category divider
-  if (item.category) {
-    const div = document.createElement('div');
-    div.className = 'category-label';
-    div.innerHTML = `<div class="cat-pip"></div><span>${item.category}</span><div class="cat-line"></div>`;
-    accordion.appendChild(div);
-  }
- 
-  const section = document.createElement('div');
-  section.className = 'section';
- 
-  const doBullets = item.mustFollow.bullets
-    ? `<ul>${item.mustFollow.bullets.map(b => `<li>${b}</li>`).join('')}</ul>`
-    : `<p>${item.mustFollow.body}</p>`;
- 
-  const dontContent = item.dont.bullets
-    ? `<ul>${item.dont.bullets.map(b => `<li>${b}</li>`).join('')}</ul>`
-    : `<p>${item.dont.body}</p>`;
- 
-  // ── Build trigger button via DOM API (avoids SP CSP blocking innerHTML buttons) ──
-  const trigger = document.createElement('button');
-  trigger.className = 'section-trigger';
-  trigger.setAttribute('aria-expanded', 'false');
-  trigger.setAttribute('aria-controls', 'panel-' + i);
-  trigger.setAttribute('type', 'button');
-  trigger.innerHTML =
-    '<div class="trigger-left">' +
-      '<div class="section-number">' + String(i + 1).padStart(2, '0') + '</div>' +
-      '<div class="trigger-text">' +
-        '<div class="section-title">' + item.title + '</div>' +
-        '<div class="section-subtitle">' + item.subtitle + '</div>' +
-      '</div>' +
-    '</div>' +
-    '<div class="chevron">' +
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">' +
-        '<polyline points="6 9 12 15 18 9"/>' +
-      '</svg>' +
-    '</div>';
 
-  const panel = document.createElement('div');
-  panel.className = 'cards-panel';
-  panel.id = 'panel-' + i;
-  panel.setAttribute('role', 'region');
-  panel.innerHTML =
-    '<div class="card dont">' +
-      '<div class="card-badge">✕ Don't</div>' +
-      '<h3>' + item.dont.heading + '</h3>' +
-      dontContent +
-    '</div>' +
-    '<div class="card do">' +
-      '<div class="card-badge">✓ Must Follow</div>' +
-      '<h3>' + item.mustFollow.heading + '</h3>' +
-      doBullets +
-    '</div>';
-
-  section.appendChild(trigger);
-  section.appendChild(panel);
-
-  // ── CLICK: toggle pin ──
-  trigger.addEventListener('click', function() {
-    if (section._pinned) {
-      section._pinned = false;
-      close(section, trigger);
-    } else {
-      section._pinned = true;
-      open(section, trigger);
-    }
-  });
-
-  accordion.appendChild(section);
-});
- 
-function open(section, trigger) {
-  section.classList.add('active');
-  trigger.setAttribute('aria-expanded', 'true');
-}
- 
-function close(section, trigger) {
-  section.classList.remove('active');
-  trigger.setAttribute('aria-expanded', 'false');
-}
+  document.addEventListener('DOMContentLoaded', init);
 </script>
 
 </body>
